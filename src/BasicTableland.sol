@@ -9,7 +9,7 @@ import {ERC721Holder} from "@openzeppelin/contracts/token/ERC721/utils/ERC721Hol
 
 contract BasicTableland is ERC721Holder {
     uint256 public tableId;
-    string private constant TABLE_PREFIX = "auditors_";
+    string private constant TABLE_PREFIX = "auditors";
     // get address of tableland contract for this network
     ITablelandTables tablelandContract = ITablelandTables(TablelandDeployments.get());
 
