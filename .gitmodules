@@ -6,3 +6,6 @@
   branch = "release-v0"
   path = "lib/prb-test"
   url = "https://github.com/PaulRBerg/prb-test"
+[submodule "lib/safe-modules"]
+	path = lib/safe-modules
+	url = https://github.com/safe-global/safe-modules
