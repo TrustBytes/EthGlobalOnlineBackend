@@ -1,0 +1,488 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes",
+          "name": "",
+          "type": "bytes"
+        }
+      ],
+      "name": "onERC721Received",
+      "outputs": [
+        {
+          "internalType": "bytes4",
+          "name": "",
+          "type": "bytes4"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "onERC721Received(address,address,uint256,bytes)": "150b7a02"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.21+commit.d9974bed\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"\",\"type\":\"bytes\"}],\"name\":\"onERC721Received\",\"outputs\":[{\"internalType\":\"bytes4\",\"name\":\"\",\"type\":\"bytes4\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Implementation of the {IERC721Receiver} interface. Accepts all token transfers. Make sure the contract is able to use its token with {IERC721-safeTransferFrom}, {IERC721-approve} or {IERC721-setApprovalForAll}.\",\"kind\":\"dev\",\"methods\":{\"onERC721Received(address,address,uint256,bytes)\":{\"details\":\"See {IERC721Receiver-onERC721Received}. Always returns `IERC721Receiver.onERC721Received.selector`.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol\":\"ERC721Holder\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":10000},\"remappings\":[\":@openzeppelin/=lib/openzeppelin/\",\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":@prb/test/=lib/prb-test/src/\",\":@tableland/evm/=lib/evm-tableland/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":evm-tableland/=lib/evm-tableland/contracts/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin/contracts/\",\":prb-test/=lib/prb-test/src/\"]},\"sources\":{\"lib/openzeppelin/contracts/token/ERC721/IERC721Receiver.sol\":{\"keccak256\":\"0x7f7a26306c79a65fb8b3b6c757cd74660c532cd8a02e165488e30027dd34ca49\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d01e0b2b837ee2f628545e54d8715b49c7ef2befd08356c2e7f6c50dde8a1c22\",\"dweb:/ipfs/QmWBAn6y2D1xgftci97Z3qR9tQnkvwQpYwFwkTvDMvqU4i\"]},\"lib/openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol\":{\"keccak256\":\"0xaad20f8713b5cd98114278482d5d91b9758f9727048527d582e8e88fd4901fd8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5396e8dbb000c2fada59b7d2093b9c7c870fd09413ab0fdaba45d882959c6244\",\"dweb:/ipfs/QmXQn5XckSiUsUBpMYuiFeqnojRX4rKa9jmgjCPeTuPmhh\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.21+commit.d9974bed"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes",
+              "name": "",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "onERC721Received",
+          "outputs": [
+            {
+              "internalType": "bytes4",
+              "name": "",
+              "type": "bytes4"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "onERC721Received(address,address,uint256,bytes)": {
+            "details": "See {IERC721Receiver-onERC721Received}. Always returns `IERC721Receiver.onERC721Received.selector`."
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/=lib/openzeppelin/",
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+        "@prb/test/=lib/prb-test/src/",
+        "@tableland/evm/=lib/evm-tableland/",
+        "ds-test/=lib/forge-std/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "evm-tableland/=lib/evm-tableland/contracts/",
+        "forge-std/=lib/forge-std/src/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "openzeppelin/=lib/openzeppelin/contracts/",
+        "prb-test/=lib/prb-test/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 10000
+      },
+      "metadata": {
+        "bytecodeHash": "none"
+      },
+      "compilationTarget": {
+        "lib/openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol": "ERC721Holder"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
+        "keccak256": "0x7f7a26306c79a65fb8b3b6c757cd74660c532cd8a02e165488e30027dd34ca49",
+        "urls": [
+          "bzz-raw://d01e0b2b837ee2f628545e54d8715b49c7ef2befd08356c2e7f6c50dde8a1c22",
+          "dweb:/ipfs/QmWBAn6y2D1xgftci97Z3qR9tQnkvwQpYwFwkTvDMvqU4i"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol": {
+        "keccak256": "0xaad20f8713b5cd98114278482d5d91b9758f9727048527d582e8e88fd4901fd8",
+        "urls": [
+          "bzz-raw://5396e8dbb000c2fada59b7d2093b9c7c870fd09413ab0fdaba45d882959c6244",
+          "dweb:/ipfs/QmXQn5XckSiUsUBpMYuiFeqnojRX4rKa9jmgjCPeTuPmhh"
+        ],
+        "license": "MIT"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "lib/openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol",
+    "id": 39609,
+    "exportedSymbols": {
+      "ERC721Holder": [
+        39608
+      ],
+      "IERC721Receiver": [
+        39581
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "119:676:25",
+    "nodes": [
+      {
+        "id": 39583,
+        "nodeType": "PragmaDirective",
+        "src": "119:24:25",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".20"
+        ]
+      },
+      {
+        "id": 39585,
+        "nodeType": "ImportDirective",
+        "src": "145:55:25",
+        "nodes": [],
+        "absolutePath": "lib/openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
+        "file": "../IERC721Receiver.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 39609,
+        "sourceUnit": 39582,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 39584,
+              "name": "IERC721Receiver",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 39581,
+              "src": "153:15:25",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 39608,
+        "nodeType": "ContractDefinition",
+        "src": "441:353:25",
+        "nodes": [
+          {
+            "id": 39607,
+            "nodeType": "FunctionDefinition",
+            "src": "639:153:25",
+            "nodes": [],
+            "body": {
+              "id": 39606,
+              "nodeType": "Block",
+              "src": "738:54:25",
+              "nodes": [],
+              "statements": [
+                {
+                  "expression": {
+                    "expression": {
+                      "expression": {
+                        "id": 39602,
+                        "name": "this",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": -28,
+                        "src": "755:4:25",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_contract$_ERC721Holder_$39608",
+                          "typeString": "contract ERC721Holder"
+                        }
+                      },
+                      "id": 39603,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberLocation": "760:16:25",
+                      "memberName": "onERC721Received",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 39607,
+                      "src": "755:21:25",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$returns$_t_bytes4_$",
+                        "typeString": "function (address,address,uint256,bytes memory) external returns (bytes4)"
+                      }
+                    },
+                    "id": 39604,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "lValueRequested": false,
+                    "memberLocation": "777:8:25",
+                    "memberName": "selector",
+                    "nodeType": "MemberAccess",
+                    "src": "755:30:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "functionReturnParameters": 39601,
+                  "id": 39605,
+                  "nodeType": "Return",
+                  "src": "748:37:25"
+                }
+              ]
+            },
+            "baseFunctions": [
+              39580
+            ],
+            "documentation": {
+              "id": 39589,
+              "nodeType": "StructuredDocumentation",
+              "src": "497:137:25",
+              "text": " @dev See {IERC721Receiver-onERC721Received}.\n Always returns `IERC721Receiver.onERC721Received.selector`."
+            },
+            "functionSelector": "150b7a02",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "onERC721Received",
+            "nameLocation": "648:16:25",
+            "parameters": {
+              "id": 39598,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 39591,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39607,
+                  "src": "665:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 39590,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "665:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 39593,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39607,
+                  "src": "674:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 39592,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "674:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 39595,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39607,
+                  "src": "683:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 39594,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "683:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 39597,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39607,
+                  "src": "692:12:25",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_memory_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 39596,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "692:5:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "664:41:25"
+            },
+            "returnParameters": {
+              "id": 39601,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 39600,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 39607,
+                  "src": "730:6:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 39599,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "730:6:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "729:8:25"
+            },
+            "scope": 39608,
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          }
+        ],
+        "abstract": true,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 39587,
+              "name": "IERC721Receiver",
+              "nameLocations": [
+                "475:15:25"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 39581,
+              "src": "475:15:25"
+            },
+            "id": 39588,
+            "nodeType": "InheritanceSpecifier",
+            "src": "475:15:25"
+          }
+        ],
+        "canonicalName": "ERC721Holder",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 39586,
+          "nodeType": "StructuredDocumentation",
+          "src": "202:238:25",
+          "text": " @dev Implementation of the {IERC721Receiver} interface.\n Accepts all token transfers.\n Make sure the contract is able to use its token with {IERC721-safeTransferFrom}, {IERC721-approve} or\n {IERC721-setApprovalForAll}."
+        },
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          39608,
+          39581
+        ],
+        "name": "ERC721Holder",
+        "nameLocation": "459:12:25",
+        "scope": 39609,
+        "usedErrors": [],
+        "usedEvents": []
+      }
+    ],
+    "license": "MIT"
+  },
+  "id": 25
+}
