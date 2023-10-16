@@ -31,6 +31,7 @@
     "test:coverage:report": "forge coverage --report lcov && genhtml lcov.info --branch-coverage --output-dir coverage"
   },
   "dependencies": {
+    "safe-modules": "github:safe-global/safe-modules",
     "solhint": "^3.6.2"
   }
 }

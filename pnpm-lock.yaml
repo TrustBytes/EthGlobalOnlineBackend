@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  safe-modules:
+    specifier: github:safe-global/safe-modules
+    version: github.com/safe-global/safe-modules/035f905fba48a4d7366ec7337a6c1014c5b1577e
   solhint:
     specifier: ^3.6.2
     version: 3.6.2
@@ -465,4 +468,10 @@ packages:
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+    dev: false
+
+  github.com/safe-global/safe-modules/035f905fba48a4d7366ec7337a6c1014c5b1577e:
+    resolution: {tarball: https://codeload.github.com/safe-global/safe-modules/tar.gz/035f905fba48a4d7366ec7337a6c1014c5b1577e}
+    name: safe-modules
+    version: 0.0.0
     dev: false
