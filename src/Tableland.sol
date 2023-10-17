@@ -60,27 +60,33 @@ contract Tableland is ERC721Holder {
         }
     }
 
-    function insertIntoTable(string memory val) external {
+    function insertIntoTable(string memory name, string memory bio, string memory competencies, uint bugsFound) external {
         TablelandDeployments.get().mutate(
             address(this), // Table owner, i.e., this contract
             tableId,
             SQLHelpers.toInsert(
                 _TABLE_PREFIX,
                 tableId,
-                "address,val",
+                "address,name,bio,competencies,bugsFound",
                 string.concat(
                     SQLHelpers.quote(Strings.toHexString(msg.sender)), // Insert the caller's address
                     ",",
-                    SQLHelpers.quote(val) // Wrap strings in single quotes with the `quote` method
+                    SQLHelpers.quote(name), // Wrap strings in single quotes with the `quote` method
+                    ",",
+                    SQLHelpers.quote(bio),
+                    ",",
+                    SQLHelpers.quote(competencies),
+                    ",",
+                    SQLHelpers.quote(Strings.toString(bugsFound))
                 )
             )
         );
     }
 
     // Update only the row that the caller inserted
-    function updateTable(string memory val) external {
+    function updateTable(string memory bio) external {
         // Set the values to update
-        string memory setters = string.concat("val=", SQLHelpers.quote(val));
+        string memory setters = string.concat("bio=", SQLHelpers.quote(bio));
         // Specify filters for which row to update
         string memory filters = string.concat("address=", SQLHelpers.quote(Strings.toHexString(msg.sender)));
         // Mutate a row at `address` with a new `val`—gating for the correct row is handled by the controller contract
@@ -92,21 +98,21 @@ contract Tableland is ERC721Holder {
     function getPolicy(address sender)
         public
         payable
-        returns (
             //   override
+        returns (
             ITablelandController.Policy memory
         )
     {
-        if (sender == owner) {
-            return ITablelandController.Policy({
-                allowInsert: true,
-                allowUpdate: true,
-                allowDelete: true,
-                whereClause: "",
-                withCheck: "",
-                updatableColumns: new string[](0)
-            });
-        }
+        // if (sender == owner) {
+            // return ITablelandController.Policy({
+            //     allowInsert: true,
+            //     allowUpdate: true,
+            //     allowDelete: true,
+            //     whereClause: "",
+            //     withCheck: "",
+            //     updatableColumns: new string[](0)
+            // });
+        // }
 
         // For all others, we'll let anyone insert but have controls on the update
         // First, establish WHERE clauses (i.e., where the address it the caller)
