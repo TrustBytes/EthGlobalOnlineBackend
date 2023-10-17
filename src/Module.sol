@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.5.0 <0.7.0;
 
-import "@gnosis.pm/safe-contracts/contracts/common/Enum.sol";
-import "@gnosis.pm/safe-contracts/contracts/common/SignatureDecoder.sol";
-import "@gnosis.pm/safe-contracts/contracts/interfaces/ISignatureValidator.sol";
+import "lib/safe-contracts/contracts/common/Enum.sol";
+import "lib/safe-contracts/contracts/common/SignatureDecoder.sol";
+import "lib/safe-contracts/contracts/interfaces/ISignatureValidator.sol";
 
 interface GnosisSafe {
     /// @dev Allows a Module to execute a Safe transaction without any further confirmations.
