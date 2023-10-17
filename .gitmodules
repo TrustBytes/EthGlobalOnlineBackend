@@ -9,3 +9,6 @@
 [submodule "lib/safe-modules"]
 	path = lib/safe-modules
 	url = https://github.com/safe-global/safe-modules
+[submodule "lib/safe-contracts"]
+	path = lib/safe-contracts
+	url = https://github.com/safe-global/safe-contracts
