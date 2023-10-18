@@ -10,10 +10,10 @@
   },
   "ast": {
     "absolutePath": "lib/evm-tableland/contracts/TablelandPolicy.sol",
-    "id": 17,
+    "id": 16,
     "exportedSymbols": {
       "TablelandPolicy": [
-        16
+        15
       ]
     },
     "nodeType": "SourceUnit",
@@ -35,26 +35,20 @@
         ]
       },
       {
-        "id": 16,
+        "id": 15,
         "nodeType": "StructDefinition",
         "src": "127:1115:0",
         "nodes": [],
         "canonicalName": "TablelandPolicy",
-        "documentation": {
-          "id": 2,
-          "nodeType": "StructuredDocumentation",
-          "src": "66:60:0",
-          "text": " @dev Object defining how a table can be accessed."
-        },
         "members": [
           {
             "constant": false,
-            "id": 4,
+            "id": 3,
             "mutability": "mutable",
             "name": "allowInsert",
             "nameLocation": "229:11:0",
             "nodeType": "VariableDeclaration",
-            "scope": 16,
+            "scope": 15,
             "src": "224:16:0",
             "stateVariable": false,
             "storageLocation": "default",
@@ -63,7 +57,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 3,
+              "id": 2,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "224:4:0",
@@ -76,12 +70,12 @@
           },
           {
             "constant": false,
-            "id": 6,
+            "id": 5,
             "mutability": "mutable",
             "name": "allowUpdate",
             "nameLocation": "319:11:0",
             "nodeType": "VariableDeclaration",
-            "scope": 16,
+            "scope": 15,
             "src": "314:16:0",
             "stateVariable": false,
             "storageLocation": "default",
@@ -90,7 +84,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 5,
+              "id": 4,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "314:4:0",
@@ -103,12 +97,12 @@
           },
           {
             "constant": false,
-            "id": 8,
+            "id": 7,
             "mutability": "mutable",
             "name": "allowDelete",
             "nameLocation": "409:11:0",
             "nodeType": "VariableDeclaration",
-            "scope": 16,
+            "scope": 15,
             "src": "404:16:0",
             "stateVariable": false,
             "storageLocation": "default",
@@ -117,7 +111,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 7,
+              "id": 6,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "404:4:0",
@@ -130,12 +124,12 @@
           },
           {
             "constant": false,
-            "id": 10,
+            "id": 9,
             "mutability": "mutable",
             "name": "whereClause",
             "nameLocation": "770:11:0",
             "nodeType": "VariableDeclaration",
-            "scope": 16,
+            "scope": 15,
             "src": "763:18:0",
             "stateVariable": false,
             "storageLocation": "default",
@@ -144,7 +138,7 @@
               "typeString": "string"
             },
             "typeName": {
-              "id": 9,
+              "id": 8,
               "name": "string",
               "nodeType": "ElementaryTypeName",
               "src": "763:6:0",
@@ -157,12 +151,12 @@
           },
           {
             "constant": false,
-            "id": 12,
+            "id": 11,
             "mutability": "mutable",
             "name": "withCheck",
             "nameLocation": "1144:9:0",
             "nodeType": "VariableDeclaration",
-            "scope": 16,
+            "scope": 15,
             "src": "1137:16:0",
             "stateVariable": false,
             "storageLocation": "default",
@@ -171,7 +165,7 @@
               "typeString": "string"
             },
             "typeName": {
-              "id": 11,
+              "id": 10,
               "name": "string",
               "nodeType": "ElementaryTypeName",
               "src": "1137:6:0",
@@ -184,12 +178,12 @@
           },
           {
             "constant": false,
-            "id": 15,
+            "id": 14,
             "mutability": "mutable",
             "name": "updatableColumns",
             "nameLocation": "1223:16:0",
             "nodeType": "VariableDeclaration",
-            "scope": 16,
+            "scope": 15,
             "src": "1214:25:0",
             "stateVariable": false,
             "storageLocation": "default",
@@ -199,7 +193,7 @@
             },
             "typeName": {
               "baseType": {
-                "id": 13,
+                "id": 12,
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "1214:6:0",
@@ -208,7 +202,7 @@
                   "typeString": "string"
                 }
               },
-              "id": 14,
+              "id": 13,
               "nodeType": "ArrayTypeName",
               "src": "1214:8:0",
               "typeDescriptions": {
@@ -221,7 +215,7 @@
         ],
         "name": "TablelandPolicy",
         "nameLocation": "134:15:0",
-        "scope": 17,
+        "scope": 16,
         "visibility": "public"
       }
     ],
