@@ -50,7 +50,7 @@ interface ITablelandTable {
     // function getPolicy(address caller) external payable returns (Policy memory);
 // }
 
-contract Tableland is ERC721Holder {
+contract AuditorRegistry is ERC721Holder {
     error AuditorExists();
     error TableExists();
     // error notOwner();
