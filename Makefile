@@ -7,7 +7,13 @@ build:; forge build
 all: clean remove install update build
 
 test:
-	@forge test --fork-url $(MUMBAI_RPC_URL)
+	@forge test -vvv
+
+testfork:
+	@forge test --fork-url $(MUMBAI_RPC_URL) -vvv
+
+coverage:
+	@forge coverage --fork-url $(MUMBAI_RPC_URL)
 
 deploytest: 
 	@forge script script/DeployAuditorRegistry.s.sol:DeployAuditorRegistry --rpc-url $(MUMBAI_RPC_URL) \
