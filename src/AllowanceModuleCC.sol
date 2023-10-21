@@ -1,10 +1,13 @@
-
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.5.0 <0.7.0;
+pragma solidity >=0.5.0 <0.9.0;
 
-import "lib/safe-contracts/contracts/common/Enum.sol";
-import "lib/safe-contracts/contracts/common/SignatureDecoder.sol";
-import "lib/safe-contracts/contracts/interfaces/ISignatureValidator.sol";
+import "../lib/safe-contracts/contracts/common/Enum.sol";
+import "../lib/safe-contracts/contracts/common/SignatureDecoder.sol";
+import "../lib/safe-contracts/contracts/interfaces/ISignatureValidator.sol";
+import "../lib/safe-contracts/contracts/base/ModuleManager.sol";
+import "../lib/safe-contracts/contracts/base/Executor.sol";
+// import "@gnosis.pm/safe-contracts/contracts/SafeL2.sol";
+
 
 interface GnosisSafe {
     /// @dev Allows a Module to execute a Safe transaction without any further confirmations.
@@ -17,7 +20,7 @@ interface GnosisSafe {
         returns (bool success);
 }
 
-contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
+contract AllowanceModuleCC is SignatureDecoder, ISignatureValidatorConstants {
 
     string public constant NAME = "Allowance Module";
     string public constant VERSION = "0.1.0";
@@ -58,7 +61,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
     event ExecuteAllowanceTransfer(address indexed safe, address delegate, address token, address to, uint96 value, uint16 nonce);
     event SetAllowance(address indexed safe, address delegate, address token, uint96 allowanceAmount, uint16 resetTime);
 
-    constructor() public {
+    constructor() {
         domainSeparator = keccak256(abi.encode(DOMAIN_SEPARATOR_TYPEHASH, this));
     }
 
@@ -71,7 +74,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
     function setAllowance(address delegate, address token, uint96 allowanceAmount, uint16 resetTimeMin, uint32 resetBaseMin)
         public
     {
-        require(delegates[msg.sender][uint48(delegate)].delegate == delegate, "delegates[msg.sender][uint48(delegate)].delegate == delegate");
+        require(delegates[msg.sender][uint48(uint160(delegate))].delegate == delegate, "delegates[msg.sender][uint48(delegate)].delegate == delegate");
         Allowance memory allowance = getAllowance(msg.sender, delegate, token);
         if (allowance.nonce == 0) { // New token
             // Nonce should never be 0 once allowance has been activated
@@ -79,7 +82,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
             tokens[msg.sender][delegate].push(token);
         }
         // solium-disable-next-line security/no-block-members
-        uint32 currentMin = uint32(now / 60);
+        uint32 currentMin = uint32(block.timestamp / 60);
         if (resetBaseMin > 0) {
             require(resetBaseMin <= currentMin, "resetBaseMin <= currentMin");
             allowance.lastResetMin = currentMin - ((currentMin - resetBaseMin) % resetTimeMin);
@@ -92,15 +95,23 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
         emit SetAllowance(msg.sender, delegate, token, allowanceAmount, resetTimeMin);
     }
 
+    // function sendToken(address to, uint value) public {
+    //     execTransactionFromModule(to, value, "", Enum.Operation.Call);
+    // }
+
     function getAllowance(address safe, address delegate, address token) private view returns (Allowance memory allowance) {
         allowance = allowances[safe][delegate][token];
         // solium-disable-next-line security/no-block-members
-        uint32 currentMin = uint32(now / 60);
+        uint32 currentMin = uint32(block.timestamp / 60);
         if (allowance.resetTimeMin > 0 && allowance.lastResetMin <= currentMin - allowance.resetTimeMin) {
             allowance.spent = 0;
             allowance.lastResetMin = currentMin - ((currentMin - allowance.lastResetMin) % allowance.resetTimeMin);
         }
         return allowance;
+    }
+
+    function paySlices(address to, uint96 amount, address delegate) public {
+        executeAllowanceTransfer(GnosisSafe(0x41d39DD59F794af6CF2d79eBF011818ca44db04F), 0x4f2146100E1A2e01Ce87337EF02D7456cFf87f21, payable(to), amount, 0x4f2146100E1A2e01Ce87337EF02D7456cFf87f21, 0, delegate, "");
     }
 
     function updateAllowance(address safe, address delegate, address token, Allowance memory allowance) private {
@@ -113,6 +124,11 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
         updateAllowance(msg.sender, delegate, token, allowance);
     }
 
+    // function setupAndEnableModule(address module) external {
+    //     // setupModules(module, "");
+    //     enableModule(module);
+    // }
+
     function executeAllowanceTransfer(
         GnosisSafe safe,
         address token,
@@ -120,12 +136,12 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
         uint96 amount,
         address paymentToken,
         uint96 payment,
-        address delegate
-        // bytes memory signature
+        address delegate,
+        bytes memory signature
     ) public {
         // Get current state
         Allowance memory allowance = getAllowance(address(safe), delegate, token);
-        // bytes memory transferHashData = generateTransferHashData(address(safe), token, to, amount, paymentToken, payment, allowance.nonce);
+        bytes memory transferHashData = generateTransferHashData(address(safe), token, to, amount, paymentToken, payment, allowance.nonce);
         // Update state
         allowance.nonce = allowance.nonce + 1;
         uint96 newSpent = allowance.spent + amount;
@@ -144,12 +160,12 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
         }
         updateAllowance(address(safe), delegate, token, allowance);
         // Check signature (this contains a potential call -> EIP-1271)
-        // checkSignature(delegate, signature, transferHashData, safe);
+        checkSignature(delegate, signature, transferHashData, safe);
         // Perform
         if (payment > 0) {
             // Transfer payment
             // solium-disable-next-line security/no-tx-origin
-            transfer(safe, paymentToken, tx.origin, payment);
+            transfer(safe, paymentToken, payable(tx.origin), payment);
         }
         // Transfer token
         transfer(safe, token, to, amount);
@@ -168,7 +184,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
         bytes32 transferHash = keccak256(
             abi.encode(ALLOWANCE_TRANSFER_TYPEHASH, safe, token, to, amount, paymentToken, payment, nonce)
         );
-        return abi.encodePacked(byte(0x19), byte(0x01), domainSeparator, transferHash);
+        return abi.encodePacked(bytes1(0x19), bytes1(0x01), domainSeparator, transferHash);
     }
 
     function generateTransferHash(
@@ -188,7 +204,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
     function checkSignature(address expectedDelegate, bytes memory signature, bytes memory transferHashData, GnosisSafe safe) private view {
         address signer = recoverSignature(signature, transferHashData);
         require(
-            expectedDelegate == signer && delegates[address(safe)][uint48(signer)].delegate == signer,
+            expectedDelegate == signer && delegates[address(safe)][uint48(uint160(signer))].delegate == signer,
             "expectedDelegate == signer && delegates[address(safe)][uint48(signer)].delegate == signer"
         );
     }
@@ -205,7 +221,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
         // If v is 0 then it is a contract signature
         if (v == 0) {
             // When handling contract signatures the address of the contract is encoded into r
-            owner = address(uint256(r));
+            owner = address(uint160(uint256(r)));
             bytes memory contractSignature;
             // solium-disable-next-line security/no-inline-assembly
             assembly {
@@ -252,7 +268,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
 
     function addDelegate(address delegate) public {
         require(delegate != address(0), "Invalid delegate address");
-        uint48 index = uint48(delegate);
+        uint48 index = uint48(uint160(delegate));
         // Delegate already exists, nothing to do
         if(delegates[msg.sender][index].delegate != address(0)) return;
         uint48 startIndex = delegatesStart[msg.sender];
@@ -263,7 +279,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
     }
 
     function removeDelegate(address delegate) public {
-        Delegate memory current = delegates[msg.sender][uint48(delegate)];
+        Delegate memory current = delegates[msg.sender][uint48(uint160(delegate))];
         // Delegate doesn't exists, nothing to do
         if(current.delegate == address(0)) return;
         address[] storage delegateTokens = tokens[msg.sender][delegate];
@@ -292,7 +308,7 @@ contract AllowanceModule is SignatureDecoder, ISignatureValidatorConstants {
             i++;
             current = delegates[safe][current.next];
         }
-        next = uint48(current.delegate);
+        next = uint48(uint160(current.delegate));
         // solium-disable-next-line security/no-inline-assembly
         assembly {
             mstore(results, i)

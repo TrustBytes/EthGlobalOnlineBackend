@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity >=0.8.21 <0.9.0;
+pragma solidity >=0.6.0 <0.9.0;
 
 import { PRBTest } from "@prb/test/PRBTest.sol";
 import { console2 } from "forge-std/console2.sol";
 import { StdCheats } from "forge-std/StdCheats.sol";
 
-import { Foo } from "../src/Foo.sol";
+import { AllowanceModuleCC } from "../src/AllowanceModuleCC.sol";
 
 interface IERC20 {
     function balanceOf(address account) external view returns (uint256);
@@ -14,28 +14,28 @@ interface IERC20 {
 /// @dev If this is your first time with Forge, read this tutorial in the Foundry Book:
 /// https://book.getfoundry.sh/forge/writing-tests
 contract FooTest is PRBTest, StdCheats {
-    Foo internal foo;
+    AllowanceModuleCC internal allowanceModuleCC;
 
     /// @dev A function invoked before each test case is run.
     function setUp() public virtual {
         // Instantiate the contract-under-test.
-        foo = new Foo();
+        allowanceModuleCC = new AllowanceModuleCC();
     }
 
     /// @dev Basic test. Run it with `forge test -vvv` to see the console log.
-    function test_Example() external {
-        console2.log("Hello World");
-        uint256 x = 42;
-        assertEq(foo.id(x), x, "value mismatch");
-    }
+    // function test_Example() external {
+    //     console2.log("Hello World");
+    //     uint256 x = 42;
+    //     assertEq(allowanceModuleCC.id(x), x, "value mismatch");
+    // }
 
     /// @dev Fuzz test that provides random values for an unsigned integer, but which rejects zero as an input.
     /// If you need more sophisticated input validation, you should use the `bound` utility instead.
     /// See https://twitter.com/PaulRBerg/status/1622558791685242880
-    function testFuzz_Example(uint256 x) external {
-        vm.assume(x != 0); // or x = bound(x, 1, 100)
-        assertEq(foo.id(x), x, "value mismatch");
-    }
+    // function testFuzz_Example(uint256 x) external {
+    //     vm.assume(x != 0); // or x = bound(x, 1, 100)
+    //     assertEq(allowanceModuleCC.id(x), x, "value mismatch");
+    // }
 
     /// @dev Fork test that runs against an Ethereum Mainnet fork. For this to work, you need to set `API_KEY_ALCHEMY`
     /// in your environment You can get an API key for free at https://alchemy.com.
