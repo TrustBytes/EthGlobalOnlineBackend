@@ -21,6 +21,7 @@ import "@tableland/evm/contracts/policies/Policies.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import {ZKPVerifier} from "@iden3/contracts/ZKPVerifier.sol";
 
 interface ITablelandTable {
     function setBaseURI(string memory baseURI) external;
@@ -50,15 +51,19 @@ interface ITablelandTable {
     // function getPolicy(address caller) external payable returns (Policy memory);
 // }
 
-contract AuditorRegistry is ERC721Holder {
+contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPRequest
     error AuditorExists();
     error TableExists();
+
+    uint64 public constant TRANSFER_REQUEST_ID = 1;
+    address private constant VALIDATOR_ADDRESS = 0xF2D4Eeb4d455fb673104902282Ce68B9ce4Ac450;
+    uint256 private constant SCHEMA = 96201852078154344702923963389809399675;
+
     // error notOwner();
     uint256 private chainId;
     uint256 public tableId;
     uint256 public uniqueId;
     string private constant _TABLE_PREFIX = "trustbytes_auditors_list";
-    address public owner;
     string private uriTemplate;
     string private _baseURIString = "https://testnets.tableland.network/api/v1/query?unwrap=true&extract=";
 
@@ -70,9 +75,9 @@ contract AuditorRegistry is ERC721Holder {
         // uriTemplate = "SELECT+json_object%28%27id%27%2C+id%2C+%27address%27%2C+address%2C+%27name%27%2C+name%2C+%27bio%27%2C+bio%2C+%27competencies%27%2C+competencies%2C+%27bugsFound%27%2C+bugsFound%29+FROM+trustbytes_auditors_list_80001_{tableId}+WHERE+id%3D{id}";
     }
 
-    modifier onlyOwner() {
-        if (msg.sender != owner) revert();
-        _;
+    function _afterProofSubmit(uint64 requestId, uint256[] memory inputs, ICircuitValidator validator) internal override {
+        // zkproof was submitted
+        // implement logic for writing to tableand
     }
 
     function queryByAddressURL(address auditorAddress) external view returns(string memory) {
