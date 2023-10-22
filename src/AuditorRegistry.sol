@@ -21,7 +21,7 @@ import "@tableland/evm/contracts/policies/Policies.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import {ZKPVerifier} from "@iden3/contracts/ZKPVerifier.sol";
+import {ZKPVerifier, ICircuitValidator} from "lib/contracts/contracts/ZKPVerifier.sol";
 
 interface ITablelandTable {
     function setBaseURI(string memory baseURI) external;
@@ -56,6 +56,8 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
     error TableExists();
 
     uint64 public constant TRANSFER_REQUEST_ID = 1;
+    mapping(uint256 => address) public idToAddress;
+    mapping(address => uint256) public addressToId;
     address private constant VALIDATOR_ADDRESS = 0xF2D4Eeb4d455fb673104902282Ce68B9ce4Ac450;
     uint256 private constant SCHEMA = 96201852078154344702923963389809399675;
 
@@ -71,13 +73,24 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
 
     constructor() {
         chainId = block.chainid;
-        owner = msg.sender;
         // uriTemplate = "SELECT+json_object%28%27id%27%2C+id%2C+%27address%27%2C+address%2C+%27name%27%2C+name%2C+%27bio%27%2C+bio%2C+%27competencies%27%2C+competencies%2C+%27bugsFound%27%2C+bugsFound%29+FROM+trustbytes_auditors_list_80001_{tableId}+WHERE+id%3D{id}";
     }
 
     function _afterProofSubmit(uint64 requestId, uint256[] memory inputs, ICircuitValidator validator) internal override {
         // zkproof was submitted
         // implement logic for writing to tableand
+           require(
+            requestId == TRANSFER_REQUEST_ID && addressToId[_msgSender()] == 0,
+            "proof can not be submitted more than once"
+        );
+
+        uint256 id = inputs[validator.getChallengeInputIndex()];
+        // execute the airdrop
+        if (idToAddress[id] == address(0)) {
+            updateVerifCompetencies(inputs[1]);
+            addressToId[_msgSender()] = id;
+            idToAddress[id] = _msgSender();
+        }
     }
 
     function queryByAddressURL(address auditorAddress) external view returns(string memory) {
@@ -162,7 +175,8 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
                 "address text," 
                 "name text,"
                 "bio text," 
-                "competencies text",
+                "competencies text,"
+                "verifCompetencies text",
                 _TABLE_PREFIX
             )
         );
@@ -218,6 +232,17 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
     function updateCompetencies(string memory competencies) external {
         // Set the values to update
         string memory setters = string.concat("competencies=", SQLHelpers.quote(competencies));
+        // Specify filters for which row to update
+        string memory filters = string.concat("auditorId=", SQLHelpers.quote(Strings.toString(auditorId[msg.sender])));
+        // Mutate a row at `address` with a new `val`—gating for the correct row is handled by the controller contract
+        TablelandDeployments.get().mutate(
+            address(this), tableId, SQLHelpers.toUpdate(_TABLE_PREFIX, tableId, setters, filters)
+        );
+    }
+
+    function updateVerifCompetencies(uint verifCompetencies) internal {
+        // Set the values to update
+        string memory setters = string.concat("verifCompetencies=", SQLHelpers.quote(Strings.toString(verifCompetencies)));
         // Specify filters for which row to update
         string memory filters = string.concat("auditorId=", SQLHelpers.quote(Strings.toString(auditorId[msg.sender])));
         // Mutate a row at `address` with a new `val`—gating for the correct row is handled by the controller contract
