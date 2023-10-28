@@ -55,11 +55,14 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
     error AuditorExists();
     error TableExists();
 
+    event ProofSubmited(uint id, uint input0, uint input1, address sender);
+
     uint64 public constant TRANSFER_REQUEST_ID = 1;
     mapping(uint256 => address) public idToAddress;
     mapping(address => uint256) public addressToId;
     address private constant VALIDATOR_ADDRESS = 0xF2D4Eeb4d455fb673104902282Ce68B9ce4Ac450;
-    uint256 private constant SCHEMA = 96201852078154344702923963389809399675;
+    uint256 private constant SCHEMA = 19935052448020978194678654852932611405;
+    uint256 private constant CLAIMPATH = 13265112789089156742742985212404101373286782412344084656487709967369040482137;
 
     // error notOwner();
     uint256 private chainId;
@@ -76,21 +79,32 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
         // uriTemplate = "SELECT+json_object%28%27id%27%2C+id%2C+%27address%27%2C+address%2C+%27name%27%2C+name%2C+%27bio%27%2C+bio%2C+%27competencies%27%2C+competencies%2C+%27bugsFound%27%2C+bugsFound%29+FROM+trustbytes_auditors_list_80001_{tableId}+WHERE+id%3D{id}";
     }
 
+    function _setZKPRequest(uint[] calldata value) public {
+        setZKPRequest(
+            1,
+            ICircuitValidator(VALIDATOR_ADDRESS),
+            SCHEMA,
+            CLAIMPATH,
+            0,
+            value
+        );
+    }
+
     function _afterProofSubmit(uint64 requestId, uint256[] memory inputs, ICircuitValidator validator) internal override {
         // zkproof was submitted
         // implement logic for writing to tableand
            require(
-            requestId == TRANSFER_REQUEST_ID && addressToId[_msgSender()] == 0,
-            "proof can not be submitted more than once"
+            requestId == TRANSFER_REQUEST_ID,
+            "Request ID should be 1"
         );
-
         uint256 id = inputs[validator.getChallengeInputIndex()];
+        emit ProofSubmited(id, inputs[0], inputs[1], msg.sender);
         // execute the airdrop
-        if (idToAddress[id] == address(0)) {
+        // if (idToAddress[id] == address(0)) {
+            addressToId[msg.sender] = id;
+            idToAddress[id] = msg.sender;
             updateVerifCompetencies(inputs[1]);
-            addressToId[_msgSender()] = id;
-            idToAddress[id] = _msgSender();
-        }
+        // }
     }
 
     function queryByAddressURL(address auditorAddress) external view returns(string memory) {
