@@ -76,6 +76,24 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
         // uriTemplate = "SELECT+json_object%28%27id%27%2C+id%2C+%27address%27%2C+address%2C+%27name%27%2C+name%2C+%27bio%27%2C+bio%2C+%27competencies%27%2C+competencies%2C+%27bugsFound%27%2C+bugsFound%29+FROM+trustbytes_auditors_list_80001_{tableId}+WHERE+id%3D{id}";
     }
 
+    /**
+     * @dev _beforeProofSubmit
+     */
+    function _beforeProofSubmit(
+        uint64, /* requestId */
+        uint256[] memory inputs,
+        ICircuitValidator validator
+    ) internal view override {
+        // check that challenge input of the proof is equal to the msg.sender
+        address addr = GenesisUtils.int256ToAddress(
+            inputs[validator.getChallengeInputIndex()]
+        );
+        require(
+            _msgSender() == addr,
+            "address in proof is not a sender address"
+        );
+    }
+
     function _afterProofSubmit(uint64 requestId, uint256[] memory inputs, ICircuitValidator validator) internal override {
         // zkproof was submitted
         // implement logic for writing to tableand
@@ -85,10 +103,16 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
         );
 
         uint256 id = inputs[validator.getChallengeInputIndex()];
-        // execute the airdrop
+
+        //one proof should only award competency score once
         if (idToAddress[id] == address(0)) {
+            // add competencies to Auditor table
             updateVerifCompetencies(inputs[1]);
+
+            // register known proof submissions
             addressToId[_msgSender()] = id;
+
+            //one proof should only award competency score once
             idToAddress[id] = _msgSender();
         }
     }
@@ -231,6 +255,7 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
 
     function updateCompetencies(string memory competencies) external {
         // Set the values to update
+        // add single quotes around value
         string memory setters = string.concat("competencies=", SQLHelpers.quote(competencies));
         // Specify filters for which row to update
         string memory filters = string.concat("auditorId=", SQLHelpers.quote(Strings.toString(auditorId[msg.sender])));
