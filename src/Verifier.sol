@@ -19,7 +19,7 @@ contract Verifier is ZKPVerifier {
     constructor() {}
 
     function _beforeProofSubmit(
-        uint64 /* requestId */,
+        uint64, /* requestId */
         uint256[] memory inputs,
         ICircuitValidator validator
     ) internal view override {
