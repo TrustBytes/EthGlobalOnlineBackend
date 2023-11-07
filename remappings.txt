@@ -2,4 +2,4 @@
 forge-std/=lib/forge-std/src/
 @tableland/evm/=lib/evm-tableland/
 @openzeppelin/=lib/openzeppelin/
-@iden3/=lib/contracts/
+@iden3/=lib/

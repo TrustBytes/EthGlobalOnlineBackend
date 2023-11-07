@@ -61,8 +61,8 @@ contract AuditorRegistry is ERC721Holder, ZKPVerifier { // TODO call setZKPReque
     mapping(uint256 => address) public idToAddress;
     mapping(address => uint256) public addressToId;
     address private constant VALIDATOR_ADDRESS = 0xF2D4Eeb4d455fb673104902282Ce68B9ce4Ac450;
-    uint256 private constant SCHEMA = 19935052448020978194678654852932611405;
-    uint256 private constant CLAIMPATH = 13265112789089156742742985212404101373286782412344084656487709967369040482137;
+    uint256 private constant SCHEMA = 94059560301743540431939984442851832139;
+    uint256 private constant CLAIMPATH = 15613733201444775213446901250862323859352022200538234341191763245966005767216;
 
     // error notOwner();
     uint256 private chainId;

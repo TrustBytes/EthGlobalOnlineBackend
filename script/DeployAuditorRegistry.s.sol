@@ -6,7 +6,14 @@ import { AuditorRegistry, ICircuitValidator, ZKPVerifier } from "../src/AuditorR
 
 /// @dev See the Solidity Scripting tutorial: https://book.getfoundry.sh/tutorials/solidity-scripting
 contract DeployAuditorRegistry is Script {
-    uint[] value = [0, 0, 0, 0, 0, 0, 0];
+    uint[] value;
+    
+constructor() {
+    for (uint i; i < 64; i++) {
+        value.push(0);
+    }
+}
+
     function run() public returns (AuditorRegistry ar) {
         uint256 deployerPrivateKey = vm.envUint('PRIVATE_KEY');
         vm.startBroadcast(deployerPrivateKey);
@@ -17,8 +24,8 @@ contract DeployAuditorRegistry is Script {
         ar.setZKPRequest(
             1,
             validator,
-            19935052448020978194678654852932611405,
-            13265112789089156742742985212404101373286782412344084656487709967369040482137,
+            94059560301743540431939984442851832139,
+            15613733201444775213446901250862323859352022200538234341191763245966005767216,
             0,
             value
         );
